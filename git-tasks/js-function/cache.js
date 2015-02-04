@@ -26,45 +26,61 @@ function Cache(){
 }
 
 Cache.prototype.add = function(key, value){
-    if (this.keys.length == 0) {
-        this.keys.push({key: key, value: value});
-        console.log('key added');
-    }
-
-    var counter = 0;
-    for (var i in this.keys){
-        if (this.keys[i].key == key) {
-            counter++;
+    if (arguments.length != 2) {
+        console.log('Parameter(s) missed.');
+    } else {
+        if (this.keys.length == 0) {
+            this.keys.push({key: key, value: value});
+            console.log('key added');
         }
-    }
 
-    if (counter == 0){
-        this.keys.push({key: key, value: value});
-        console.log('key added');
+        var counter = 0;
+        for (var i in this.keys) {
+            if (this.keys[i].key == key) {
+                counter++;
+            }
+        }
+
+        if (counter == 0) {
+            this.keys.push({key: key, value: value});
+            console.log('key added');
+        }
     }
 }
 
 
 Cache.prototype.get = function(key) {
-    for (var i in this.keys) {
-        if (this.keys[i].key == key) {
-            console.log(this.keys[i].value);
+    if (arguments.length != 1) {
+        console.log('Parameter missed.');
+    } else {
+        for (var i in this.keys) {
+            if (this.keys[i].key == key) {
+                console.log(this.keys[i].value);
+            }
         }
     }
 }
 
 Cache.prototype.delete = function(key){
-    for (var i in this.keys){
-        if (this.keys[i].key == key){
-            this.keys.splice(i, 1);
+    if (arguments.length != 1) {
+        console.log('Parameter missed.');
+    } else {
+        for (var i in this.keys) {
+            if (this.keys[i].key == key) {
+                this.keys.splice(i, 1);
+            }
         }
     }
 }
 
 Cache.prototype.update = function(key, value){
-    for (var i in this.keys){
-        if (this.keys[i].key == key) {
-            this.keys[i].value = value;
+    if (arguments.length != 2) {
+        console.log('Parameter(s) missed.');
+    } else {
+        for (var i in this.keys) {
+            if (this.keys[i].key == key) {
+                this.keys[i].value = value;
+            }
         }
     }
 }
@@ -73,13 +89,17 @@ Cache.prototype.update = function(key, value){
 Cache.prototype.find = function(query){
     var res = [];
 
-    for (var i in this.keys){
-        if (this.keys[i].value.toString().indexOf(query) >= 0) {
-            res.push(this.keys[i]);
+    if (arguments.length != 1) {
+        console.log('Parameter missed.');
+        return false;
+    } else {
+        for (var i in this.keys) {
+            if (this.keys[i].value.toString().indexOf(query) >= 0) {
+                res.push(JSON.parse('{"'+this.keys[i].key+'":'+this.keys[i].value+'}'));
+            }
         }
+        return res;
     }
-
-    return res;
 }
 
 // calculate value length by key (if key not set - calculate sum of values length in all cache)
@@ -122,4 +142,5 @@ cache.get('root5');
 cache.get('root2');
 cache.get('root4');
 console.log(cache.find('2'));
-//cache.get('root2');
+cache.get();
+console.log(cache.find());
