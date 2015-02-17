@@ -5,7 +5,7 @@
 var WebSocketServer = require('ws').Server;
 var fs = require('fs');
 
-var fileName = "AvidSS_2.mp4";
+var fileName = "QA-process-overview.mov";
 
 var wss = new WebSocketServer({port: 3000,host:"127.0.0.1"});
 wss.on('connection', function(ws) {
@@ -17,4 +17,8 @@ wss.on('connection', function(ws) {
     readStream.on('data', function(data) {
         ws.send(data, {binary: true, mask: false});
     });
+
+    readStream.on('close', function(){
+        ws.close();
+    })
 });
