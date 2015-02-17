@@ -5,10 +5,12 @@
 var WebSocketServer = require('ws').Server;
 var fs = require('fs');
 
+var fileName = "AvidSS_2.mp4";
+
 var wss = new WebSocketServer({port: 3000,host:"127.0.0.1"});
 wss.on('connection', function(ws) {
     var readStream =
-        fs.createReadStream("AvidSS_2.mp4",
+        fs.createReadStream(fileName,
             {'flags': 'r',
                 'mode': 0666});
 

@@ -31,9 +31,6 @@ Users.prototype.getSaltedPassword = function(){
 
 
 
-
-
-
 var petya = new Users();
 petya.setPassword('password');
 console.log(petya.checkPassword('password'));
